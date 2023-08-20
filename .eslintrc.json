@@ -1,0 +1,26 @@
+{
+    "extends": "airbnb-base",
+    "settings": {
+        "import/core-modules": ["mongoose"]
+    },
+    "rules": {
+        // "linebreak-style": ["error", "unix"],
+        "linebreak-style": ["error", "windows"],
+        "max-len": [1, 200, 2, {"ignoreComments": true}],
+        "no-underscore-dangle": [0, { "allow": [] }],
+        "semi": ["error", "always"],
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "camelcase": "off"
+    },
+    "overrides": [
+        {
+            "files": "*.js",
+            "rules": {
+                "no-console": "off"
+            }
+        }
+    ],
+    "globals": {
+        "logger": true
+    }
+}
