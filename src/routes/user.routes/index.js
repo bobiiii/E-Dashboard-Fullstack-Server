@@ -1,8 +1,9 @@
 const express = require('express');
-const userLoignRoutes = require('./user.login');
+const userRoute = require('./user.routes');
 
 const userRoutes = express.Router();
 
-userRoutes.use(userLoignRoutes);
+userRoutes.use(userRoute);
+userRoutes.use('*', (req, res) => { res.send('Route Not Found'); });
 
 module.exports = userRoutes;
