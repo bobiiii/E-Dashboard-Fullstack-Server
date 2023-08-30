@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const invoiceSchema = new mongoose.Schema({
+const inventorySchema = new mongoose.Schema({
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'products' }],
 
   invoice: {
@@ -30,6 +30,6 @@ const invoiceSchema = new mongoose.Schema({
 
 });
 
-const InvoiceModel = mongoose.model('invoice', invoiceSchema);
+const InventoryModel = mongoose.model('invoice', inventorySchema);
 
-module.exports = InvoiceModel;
+module.exports = InventoryModel;

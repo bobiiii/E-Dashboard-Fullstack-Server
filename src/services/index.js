@@ -1,9 +1,15 @@
 const userServices = require('./user.services');
-const invoiceServices = require('./invoice.services');
+const inventoryServices = require('./inventory.services');
 const productServices = require('./product.services');
+const supplierServices = require('./supplier.services');
+const returnInventoryServices = require('./returnInventory.services');
+const faultyInventoryServices = require('./faultyInventory.services');
 
 module.exports = {
   userServices,
-  invoiceServices,
+  inventoryServices,
   productServices,
+  supplierServices,
+  returnInventoryServices,
+  faultyInventoryServices,
 };
