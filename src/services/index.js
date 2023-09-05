@@ -6,6 +6,7 @@ const returnInventoryServices = require('./returnInventory.services');
 const faultyInventoryServices = require('./faultyInventory.services');
 const storesServices = require('./stores.services');
 const RemainingOrdersServices = require('./remainingOrders.services');
+const DispatchedOrdersServices = require('./dispatchedOrders.services');
 
 module.exports = {
   userServices,
@@ -16,4 +17,5 @@ module.exports = {
   faultyInventoryServices,
   storesServices,
   RemainingOrdersServices,
+  DispatchedOrdersServices,
 };

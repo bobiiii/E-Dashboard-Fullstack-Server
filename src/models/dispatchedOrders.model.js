@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const remainingOrdersSchema = new mongoose.Schema(
+const DispatchedOrdersSchema = new mongoose.Schema(
   {
 
     order_number: {
@@ -25,6 +25,6 @@ const remainingOrdersSchema = new mongoose.Schema(
   },
 );
 
-const RemainingOrdersModel = mongoose.model('remaining-orders', remainingOrdersSchema);
+const DispatchedOrdersModel = mongoose.model('dispatched-orders', DispatchedOrdersSchema);
 
-module.exports = RemainingOrdersModel;
+module.exports = DispatchedOrdersModel;

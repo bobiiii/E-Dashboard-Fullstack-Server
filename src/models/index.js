@@ -6,6 +6,7 @@ const ReturnInventoryModel = require('./returnInventory.model');
 const FaultyInventoryModel = require('./faultyInventory.model');
 const StoresModel = require('./store.model');
 const RemainingOrdersModel = require('./RemainingOrders.model');
+const DispatchedOrdersModel = require('./dispatchedOrders.model');
 
 module.exports = {
   UserModel,
@@ -16,5 +17,6 @@ module.exports = {
   FaultyInventoryModel,
   StoresModel,
   RemainingOrdersModel,
+  DispatchedOrdersModel,
 
 };

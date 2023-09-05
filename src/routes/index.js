@@ -20,6 +20,8 @@ apiRoutes.use('/supplier', supplierRoutes);
 apiRoutes.use('/stores', storesRoutes);
 apiRoutes.use('/remaining-orders', remainingOrdersRoutes);
 apiRoutes.use('/dispatched-orders', dispatchedOrdersRoutes);
-apiRoutes.use('*', (req, res) => { res.send('Route Not Found'); });
+apiRoutes.use('*', (req, res) => {
+  res.send('Route Not Found');
+});
 
 module.exports = apiRoutes;

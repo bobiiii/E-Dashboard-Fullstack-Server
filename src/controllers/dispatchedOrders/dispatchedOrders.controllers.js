@@ -1,12 +1,13 @@
 const {
-  RemainingOrdersServices,
+  DispatchedOrdersServices,
 } = require('../../services');
 
 const getDispatchedOrders = async (req, res) => {
   try {
     const dispatchedOrders = await DispatchedOrdersServices.getDispatchedOrders();
+    console.log('dis afr');
     if (!dispatchedOrders || dispatchedOrders.length === 0) {
-      return res.status(404).send('No Remaining Order found.');
+      return res.status(404).send('No dispatched Order found.');
     }
     return res.send({ data: dispatchedOrders });
   } catch (error) {
@@ -36,14 +37,14 @@ const addDispatchedOrder = async (req, res) => {
       total_amount,
     } = req.body;
 
-    const addeDispatchedOrder = await RemainingOrdersServices.addDispatchedOrder({
+    const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
       order_number,
       product_id,
       quantity,
       total_amount,
     });
     if (!addeDispatchedOrder) {
-      return res.send({ message: 'Adding Remaining Order failed' });
+      return res.send({ message: 'Adding dispatched Order failed' });
     }
 
     return res.send({ data: addeDispatchedOrder });
@@ -61,16 +62,16 @@ const updateDispatchedOrder = async (req, res) => {
       quantity,
       total_amount,
     } = req.body;
-    const { remainingOrderId } = req.params;
-    const updatedRemainingOrder = await RemainingOrdersServices.updateDispatchedOrder({
-      remainingOrderId,
+    const { dispatchedOrderId } = req.params;
+    const updatedRemainingOrder = await DispatchedOrdersServices.updateDispatchedOrder({
+      dispatchedOrderId,
       order_number,
       product_id,
       quantity,
       total_amount,
     });
     if (!updatedRemainingOrder) {
-      return res.send({ message: 'Unable to update Remaining Order' });
+      return res.send({ message: 'Unable to update dispatched Order' });
     }
     return res.send({ data: updatedRemainingOrder });
   } catch (error) {
@@ -81,10 +82,10 @@ const updateDispatchedOrder = async (req, res) => {
 
 const deleteDispatchedOrder = async (req, res) => {
   try {
-    const { remainingOrderId } = req.params;
-    const deletedRemainingOrder = await RemainingOrdersServices.deleteDispatchedOrder({ remainingOrderId });
+    const { dispatchedOrderId } = req.params;
+    const deletedRemainingOrder = await DispatchedOrdersServices.deleteDispatchedOrder({ dispatchedOrderId });
     if (!deletedRemainingOrder) {
-      return res.send({ message: 'Unable to delete Remaining Order' });
+      return res.send({ message: 'Unable to delete dispatched Order' });
     }
     return res.send({ data: deletedRemainingOrder });
   } catch (error) {
