@@ -3,7 +3,7 @@ const { supplierServices } = require('../../services');
 const getSuppliers = async (req, res) => {
   try {
     const suppliers = await supplierServices.getSuppliers();
-    if (!suppliers || suppliers.legth === 0) {
+    if (!suppliers || suppliers.length === 0) {
       return res.send({ message: 'No suppliers Found' });
     }
 

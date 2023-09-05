@@ -4,9 +4,9 @@ const { inventoryControllers } = require('../../controllers');
 const returnInventoryRoute = express.Router();
 
 returnInventoryRoute.get('/return-inventories', inventoryControllers.getReturnInventories);
-returnInventoryRoute.get('/:returnInventoryId', inventoryControllers.getInventoryProducts);
+returnInventoryRoute.get('/:returnInventoryId', inventoryControllers.getReturnInventoryDetails);
 returnInventoryRoute.post('/return-inventory', inventoryControllers.addReturnInventory);
-returnInventoryRoute.put('/:returnInventoryId', inventoryControllers.updateInventory);
-returnInventoryRoute.delete('/:returnInventoryId', inventoryControllers.deleteInventory);
+returnInventoryRoute.put('/:returnInventoryId', inventoryControllers.updateReturnInventory);
+returnInventoryRoute.delete('/:returnInventoryId', inventoryControllers.deleteReturnInventory);
 
 module.exports = returnInventoryRoute;

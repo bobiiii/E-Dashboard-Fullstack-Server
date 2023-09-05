@@ -6,8 +6,14 @@ const {
   deleteInventory,
   getFaultyInventories,
   addFaultyInventory,
+  getFaultyInventoryDetails,
+  updateFaultyInventory,
+  deletefaultyInventory,
   getReturnInventories,
   addReturnInventory,
+  getReturnInventoryDetails,
+  updateReturnInventory,
+  deleteReturnInventory,
 
 } = require('./inventory.controllers');
 
@@ -19,6 +25,12 @@ module.exports = {
   deleteInventory,
   getFaultyInventories,
   addFaultyInventory,
+  getFaultyInventoryDetails,
+  updateFaultyInventory,
+  deletefaultyInventory,
   getReturnInventories,
   addReturnInventory,
+  getReturnInventoryDetails,
+  updateReturnInventory,
+  deleteReturnInventory,
 };

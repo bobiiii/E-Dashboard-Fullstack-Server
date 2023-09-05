@@ -111,6 +111,51 @@ const addFaultyInventory = async (req, res) => {
     return res.send({ message: 'An Error Occured' });
   }
 };
+const getFaultyInventoryDetails = async (req, res) => {
+  try {
+    const { faultyInventoryId } = req.params;
+    const data = await faultyInventoryServices.getFaultyInventoryDetails({
+      faultyInventoryId,
+    });
+    if (!data) {
+      return res.send({ message: 'No Faulty Inventory Found' });
+    }
+    return res.send({ message: data });
+  } catch (error) {
+    return res.send({ message: 'An Error Occured' });
+  }
+};
+
+const updateFaultyInventory = async (req, res) => {
+  try {
+    const { faultyInventoryId } = req.params;
+    const {
+      invoice, dispatch_date, product, comment,
+    } = req.body;
+    const data = await faultyInventoryServices.updateFaultyInventory({
+      faultyInventoryId, invoice, dispatch_date, product, comment,
+    });
+    if (!data) {
+      return res.send({ message: 'Unable to update Faulty Inventory' });
+    }
+    return res.send({ message: data });
+  } catch (error) {
+    return res.send({ message: 'An Error Occured' });
+  }
+};
+
+const deletefaultyInventory = async (req, res) => {
+  try {
+    const { faultyInventoryId } = req.params;
+    const deletedinventory = await faultyInventoryServices.deletefaultyInventory({ faultyInventoryId });
+    if (!deletedinventory) {
+      return res.send({ message: 'Unable to delete faulty inventory' });
+    }
+    return res.send({ data: deletedinventory });
+  } catch (error) {
+    return res.send({ message: 'An error Occured' });
+  }
+};
 
 // Return Inventory Controllers
 const getReturnInventories = async (req, res) => {
@@ -142,6 +187,53 @@ const addReturnInventory = async (req, res) => {
   }
 };
 
+const getReturnInventoryDetails = async (req, res) => {
+  try {
+    const { returnInventoryId } = req.params;
+    const data = await returnInventoryServices.getReturnInventoryDetails({
+      returnInventoryId,
+    });
+    if (!data) {
+      return res.send({ message: 'No Faulty Inventory Found' });
+    }
+    return res.send({ message: data });
+  } catch (error) {
+    return res.send({ message: 'An Error Occured' });
+  }
+};
+
+const updateReturnInventory = async (req, res) => {
+  try {
+    const { returnInventoryId } = req.params;
+    const {
+      invoice, dispatch_date, product, comment,
+    } = req.body;
+    const data = await returnInventoryServices.updateReturnInventory({
+      returnInventoryId, invoice, dispatch_date, product, comment,
+    });
+    if (!data) {
+      return res.send({ message: 'Unable to update return Inventory' });
+    }
+    return res.send({ message: data });
+  } catch (error) {
+    console.log(error);
+    return res.send({ message: 'An Error Occured' });
+  }
+};
+
+const deleteReturnInventory = async (req, res) => {
+  try {
+    const { returnInventoryId } = req.params;
+    const deletedinventory = await returnInventoryServices.deleteReturnInventory({ returnInventoryId });
+    if (!deletedinventory) {
+      return res.send({ message: 'Unable to delete return inventory' });
+    }
+    return res.send({ data: deletedinventory });
+  } catch (error) {
+    return res.send({ message: 'An error Occured' });
+  }
+};
+
 module.exports = {
   getInventories,
   addInventory,
@@ -150,6 +242,12 @@ module.exports = {
   deleteInventory,
   getFaultyInventories,
   addFaultyInventory,
+  getFaultyInventoryDetails,
+  updateFaultyInventory,
+  deletefaultyInventory,
   getReturnInventories,
   addReturnInventory,
+  getReturnInventoryDetails,
+  updateReturnInventory,
+  deleteReturnInventory,
 };
