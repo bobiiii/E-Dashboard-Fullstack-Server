@@ -32,7 +32,6 @@ const addInventory = async (req, res) => {
     const {
       products, invoice, date, supplier, warehouse, stock, total_price,
     } = req.body;
-
     const addedProductsIds = await productServices.addMultipleProducts(products);
     if (!addedProductsIds) {
       return res.send({ message: 'Adding products failed' });

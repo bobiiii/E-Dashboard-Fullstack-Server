@@ -5,7 +5,7 @@ const env = require('./env');
 const connectMongoDB = async () => {
   try {
     mongooose.set('strictQuery', true);
-    if (env.NODE_ENV === 'test') {
+    if (env.NODE_ENV === 'development') {
       await mongooose.connect(env.MONGO_URI_TEST, { useNewurlParser: true, useUnifiedTopology: true });
     } else {
       await mongooose.connect(env.MONGO_URI, { useNewurlParser: true, useUnifiedTopology: true });
