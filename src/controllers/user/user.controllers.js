@@ -1,4 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+const JWT = require('jsonwebtoken');
 const { userServices } = require('../../services');
+const { environmentVariables } = require('../../config');
 
 const addUserController = async (req, res) => {
   const { email, password, role } = req.body;
@@ -30,10 +33,19 @@ const loginUserController = async (req, res) => {
       return res.send('User Not Found');
     }
     const loginUser = await userServices.loginUser({ email, password });
+
     if (!loginUser) {
       return res.send({ message: 'Email or Password is incorrect', data: loginUser });
     }
-    return res.send('Login Success');
+    const userDetails = {
+      email, password,
+    };
+    const token = JWT.sign(userDetails, environmentVariables.SECRET_KEY);
+    res.cookie('authToken', token, {
+      httpOnly: true, // Makes the cookie HttpOnly for added security
+      // Other cookie options (e.g., expires, secure, etc.) can be configured here
+    });
+    return res.status(200).json({ data: 'Login Success' });
   } catch (error) {
     console.log(error);
     return res.status(403).send('some error occured');
