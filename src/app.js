@@ -15,13 +15,13 @@ app.get('/', () => {
 
 app.use(apiRoutes);
 
-app.listen(environmentVariables.APP_PORT || 8080, (err) => {
+app.listen(8080 || 8080, (err) => {
   if (err) {
     console.log(err);
   }
   connectMongoDB().then(() => {
     console.info('Connected to MongoDB Atlas Dashboard Cluster');
-    console.info(`server running on ${environmentVariables.APP_HOST}:${environmentVariables.APP_PORT}`);
+    console.info(`server running on ${'http://localhost'}:${8080}`);
   }).catch((_error) => {
     console.log(_error);
   });
