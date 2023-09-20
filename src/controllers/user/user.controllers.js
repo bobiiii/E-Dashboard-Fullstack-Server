@@ -42,8 +42,7 @@ const loginUserController = async (req, res) => {
     };
     const token = JWT.sign(userDetails, environmentVariables.SECRET_KEY);
     res.cookie('authToken', token, {
-      httpOnly: true, // Makes the cookie HttpOnly for added security
-      // Other cookie options (e.g., expires, secure, etc.) can be configured here
+      httpOnly: true,
     });
     return res.status(200).json({ data: 'Login Success' });
   } catch (error) {

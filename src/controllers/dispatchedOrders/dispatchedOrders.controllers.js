@@ -5,7 +5,6 @@ const {
 const getDispatchedOrders = async (req, res) => {
   try {
     const dispatchedOrders = await DispatchedOrdersServices.getDispatchedOrders();
-    console.log('dis afr');
     if (!dispatchedOrders || dispatchedOrders.length === 0) {
       return res.status(404).send('No dispatched Order found.');
     }
@@ -32,15 +31,15 @@ const addDispatchedOrder = async (req, res) => {
   try {
     const {
       order_number,
-      product_id,
-      quantity,
+      dispatch_center,
+      dispatch_date,
       total_amount,
     } = req.body;
 
     const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
       order_number,
-      product_id,
-      quantity,
+      dispatch_center,
+      dispatch_date,
       total_amount,
     });
     if (!addeDispatchedOrder) {
@@ -58,16 +57,16 @@ const updateDispatchedOrder = async (req, res) => {
   try {
     const {
       order_number,
-      product_id,
-      quantity,
+      dispatch_center,
+      dispatch_date,
       total_amount,
     } = req.body;
     const { dispatchedOrderId } = req.params;
     const updatedRemainingOrder = await DispatchedOrdersServices.updateDispatchedOrder({
       dispatchedOrderId,
       order_number,
-      product_id,
-      quantity,
+      dispatch_center,
+      dispatch_date,
       total_amount,
     });
     if (!updatedRemainingOrder) {

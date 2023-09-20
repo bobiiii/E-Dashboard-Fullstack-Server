@@ -39,6 +39,7 @@ const protectedRoute = asyncHandler(async (req, res, next) => {
 });
 
 const adminOnlyRoute = asyncHandler(
+  // eslint-disable-next-line consistent-return
   async (req, res, next) => {
     if (req.user.role !== 'Admin') {
       return next(new ErrorHandler('Your aren\'t authorized to access this route ', 401));

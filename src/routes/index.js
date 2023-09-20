@@ -8,6 +8,7 @@ const supplierRoutes = require('./supplier.routes');
 const storesRoutes = require('./stores.routes');
 const remainingOrdersRoutes = require('./remainingOrders.routes');
 const dispatchedOrdersRoutes = require('./dispatchedOrders.routes');
+const dispatchedCentersRoutes = require('./dispatchedCenters.routes');
 
 const apiRoutes = express.Router();
 
@@ -20,6 +21,7 @@ apiRoutes.use('/supplier', supplierRoutes);
 apiRoutes.use('/stores', storesRoutes);
 apiRoutes.use('/remaining-orders', remainingOrdersRoutes);
 apiRoutes.use('/dispatched-orders', dispatchedOrdersRoutes);
+apiRoutes.use('/dispatched-centers', dispatchedCentersRoutes);
 apiRoutes.use('*', (req, res) => {
   res.send('Route Not Found');
 });
