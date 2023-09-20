@@ -7,11 +7,11 @@ const DispatchedOrdersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    product_id: {
+    dispatch_center: {
       type: String,
       required: true,
     },
-    quantity: {
+    dispatch_date: {
       type: Number,
       required: true,
     },

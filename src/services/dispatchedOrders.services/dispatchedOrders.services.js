@@ -4,14 +4,14 @@ const getDispatchedOrders = async () => DispatchedOrdersModel.find({});
 
 const addDispatchedOrder = async ({
   order_number,
-  product_id,
-  quantity,
+  dispatch_center,
+  dispatch_date,
   total_amount,
 }) => {
   const response = await DispatchedOrdersModel.create({
     order_number,
-    product_id,
-    quantity,
+    dispatch_center,
+    dispatch_date,
     total_amount,
   });
   return response;
@@ -26,14 +26,14 @@ const getDispatchedOrderDetails = async ({
 
 const updateDispatchedOrder = async ({
   dispatchedOrderId, order_number,
-  product_id,
-  quantity,
+  dispatch_center,
+  dispatch_date,
   total_amount,
 }) => {
   const data = {
     order_number,
-    product_id,
-    quantity,
+    dispatch_center,
+    dispatch_date,
     total_amount,
   };
   const response = await DispatchedOrdersModel.findByIdAndUpdate(dispatchedOrderId, data, { new: true });

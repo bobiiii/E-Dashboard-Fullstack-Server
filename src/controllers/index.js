@@ -5,6 +5,7 @@ const supplierController = require('./supplier');
 const storesController = require('./stores');
 const remainingOrdersControllers = require('./remainingOrders');
 const dispatchedOrdersControllers = require('./dispatchedOrders');
+const dispatchedCentersControllers = require('./dispatchedCenters');
 
 module.exports = {
   userControllers,
@@ -14,5 +15,6 @@ module.exports = {
   storesController,
   remainingOrdersControllers,
   dispatchedOrdersControllers,
+  dispatchedCentersControllers,
 
 };
