@@ -30,12 +30,12 @@ const loginUserController = async (req, res) => {
     const { email, password } = req.body;
     const userExist = await userServices.getUserEmail({ email });
     if (!userExist) {
-      return res.send('User Not Found');
+      return res.status(400).send('User Not Found');
     }
     const loginUser = await userServices.loginUser({ email, password });
 
     if (!loginUser) {
-      return res.send({ message: 'Email or Password is incorrect', data: loginUser });
+      return res.status(402).send({ message: 'Email or Password is incorrect', data: loginUser });
     }
     const userDetails = {
       email, password,

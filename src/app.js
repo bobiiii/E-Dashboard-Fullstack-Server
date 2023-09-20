@@ -24,13 +24,13 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-app.listen(8080 || 8080, (err) => {
+app.listen(environmentVariables.APP_PORT || 8080, (err) => {
   if (err) {
     console.log(err);
   }
   connectMongoDB().then(() => {
     console.info('Connected to MongoDB Atlas Dashboard Cluster');
-    console.info(`server running on ${'http://localhost'}:${8080}`);
+    console.info(`server running on ${environmentVariables.APP_HOST}:${8080}`);
   }).catch((_error) => {
     console.log(_error);
   });
