@@ -1,89 +1,68 @@
 const { productServices } = require('../../services');
+const { ErrorHandler } = require('../../utils/errorHandlers');
+const asyncHandler = require('../../utils/asyncHandler');
 
-const getProducts = async (req, res) => {
-  try {
-    const products = await productServices.getProducts();
-    if (!products) {
-      return res.send('No Products Found!');
-    }
-    return res.send({ data: products });
-  } catch (error) {
-    console.log(error);
-    return res.send('Error occured');
+const getProducts = asyncHandler(async (req, res, next) => {
+  const products = await productServices.getProducts();
+  if (!products) {
+    return next(new ErrorHandler('No products found', 404));
   }
-};
+  return res.send({ data: products });
+});
 
-const addProduct = async (req, res) => {
-  try {
-    const {
-      title, desc, quantity, price, selling_price, imgURL,
-    } = req.body;
-    if ((!title && !quantity && !price && !selling_price)) {
-      return res.send('Please fill valid data');
-    }
-    const products = await productServices.addProduct({
-      title, desc, quantity, price, selling_price, imgURL,
-    });
-    if (!products) {
-      return res.send('Unable to add Product');
-    }
-    return res.send({ data: products });
-  } catch (error) {
-    console.log(error);
-    return res.send('Error occured');
+const addProduct = asyncHandler(async (req, res, next) => {
+  const {
+    title, desc, quantity, price, selling_price, imgURL,
+  } = req.body;
+  if ((!title && !quantity && !price && !selling_price)) {
+    return next(new ErrorHandler('Please fill All Fields', 400));
   }
-};
+  const products = await productServices.addProduct({
+    title, desc, quantity, price, selling_price, imgURL,
+  });
+  if (!products) {
+    return next(new ErrorHandler('Unable to add Product', 500));
+  }
+  return res.status(200).json({ data: products });
+});
 
-const getProductDetails = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const productDetails = await productServices.getProductDetails({ productId });
-    if (!productDetails.length && !productDetails) {
-      return res.send('Product details not found');
-    }
-    return res.send({ data: productDetails });
-  } catch (error) {
-    return res.send('An error occurde');
+const getProductDetails = asyncHandler(async (req, res, next) => {
+  const { productId } = req.params;
+  const productDetails = await productServices.getProductDetails({ productId });
+  if (!productDetails.length && !productDetails) {
+    return next(new ErrorHandler('Unable to add Product', 404));
   }
-};
+  return res.status(200).json({ data: productDetails });
+});
 
-const updateProduct = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const {
-      title, desc, quantity, price, selling_price, imgURL,
-    } = req.body;
-    const updatedProduct = await productServices.updateProduct({
-      productId,
-      title,
-      desc,
-      quantity,
-      price,
-      selling_price,
-      imgURL,
-    });
-    if (!updatedProduct) {
-      return res.send('Unable to update Product');
-    }
-    return res.send({ data: updatedProduct });
-  } catch (error) {
-    console.log(error);
-    return res.send('Error occured');
+const updateProduct = asyncHandler(async (req, res, next) => {
+  const { productId } = req.params;
+  const {
+    title, desc, quantity, price, selling_price, imgURL,
+  } = req.body;
+  const updatedProduct = await productServices.updateProduct({
+    productId,
+    title,
+    desc,
+    quantity,
+    price,
+    selling_price,
+    imgURL,
+  });
+  if (!updatedProduct) {
+    return next(new ErrorHandler('Unable to update Product', 500));
   }
-};
+  return res.staus(200).json({ data: updatedProduct });
+});
 
-const deleteProduct = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const deletedProduct = await productServices.deleteProduct({ productId });
-    if (!deletedProduct.length && !deletedProduct) {
-      return res.send('Product could not be deleted');
-    }
-    return res.send('Product deleted success');
-  } catch (error) {
-    return res.send('An error occurde');
+const deleteProduct = asyncHandler(async (req, res, next) => {
+  const { productId } = req.params;
+  const deletedProduct = await productServices.deleteProduct({ productId });
+  if (!deletedProduct.length && !deletedProduct) {
+    return next(new ErrorHandler('Unable to delete Product', 500));
   }
-};
+  return res.status(204).send('Product deleted successfully');
+});
 
 module.exports = {
   getProducts,
