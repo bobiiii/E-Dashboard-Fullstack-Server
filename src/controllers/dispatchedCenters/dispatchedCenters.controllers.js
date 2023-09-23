@@ -4,7 +4,6 @@ const {
 
 const getDispatchedCenters = async (req, res) => {
   try {
-    console.log('dispatch cntrlr');
     const dispatchedCenters = await DispatchedCentersServices.getDispatchedCenters();
     if (!dispatchedCenters || dispatchedCenters.length === 0) {
       return res.status(404).send('No dispatched Center found.');

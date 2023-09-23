@@ -29,7 +29,6 @@ const updateDispatchedCenter = async ({
   courier_service,
 }) => {
   const data = {
-
     center_name,
     location,
     courier_service,
