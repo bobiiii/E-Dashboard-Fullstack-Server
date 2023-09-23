@@ -1,9 +1,15 @@
 const {
   getProducts,
-  addProducts,
+  getProductDetails,
+  addProduct,
+  updateProduct,
+  deleteProduct,
 } = require('./product.controllers');
 
 module.exports = {
   getProducts,
-  addProducts,
+  getProductDetails,
+  addProduct,
+  updateProduct,
+  deleteProduct,
 };

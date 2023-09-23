@@ -45,6 +45,7 @@ const sendErrorDev = (err, req, res) => {
   if (req.originalUrl.startsWith('/')) {
     return res.status(err.statusCode).json({
       status: err.status,
+      name: err.name,
       error: err,
       message: err.message,
       stack: err.stack,
@@ -98,3 +99,22 @@ const globalErrorHandler = (err, req, res, next) => {
 };
 
 module.exports = { ErrorHandler, globalErrorHandler };
+
+// status code
+
+// not found 404
+
+// 401 Unauthorized - The client hasn’t authorized itself to the backend yet and
+// the server may give it access after that has happened.
+// 403 Forbidden - The client has authorized or doesn’t need to authorize itself,
+//  but still has no permissions to access the resource
+
+//  200 OK - Some people think a delete function of any kind should return the deleted element,
+//   so a representation of the deleted element can be included in the response body.
+// 204 No Content - The most fitting status code for this case. It’s better to
+//  reduce traffic and simply tell the client the deletion is complete
+//  and return no response body (as the resource has been deleted).
+
+// Unable to Add Product (500)
+// Unable to Add Product (500)
+// Please Fill Valid Data (400)

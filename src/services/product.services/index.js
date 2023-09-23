@@ -1,3 +1,17 @@
-const { addProducts, getProducts, addMultipleProducts } = require('./product.service');
+const {
+  addProduct,
+  getProducts,
+  getProductDetails,
+  addMultipleProducts,
+  updateProduct,
+  deleteProduct,
+} = require('./product.service');
 
-module.exports = { addProducts, getProducts, addMultipleProducts };
+module.exports = {
+  addProduct,
+  getProducts,
+  getProductDetails,
+  addMultipleProducts,
+  updateProduct,
+  deleteProduct,
+};
