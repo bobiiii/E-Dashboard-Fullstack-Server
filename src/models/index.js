@@ -8,7 +8,6 @@ const StoresModel = require('./store.model');
 const RemainingOrdersModel = require('./remainingOrders.model');
 const DispatchedOrdersModel = require('./dispatchedOrders.model');
 const DispatchedCentersModel = require('./dispatchedCenters.model');
-// hello
 
 module.exports = {
   UserModel,
