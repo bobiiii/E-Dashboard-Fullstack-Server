@@ -13,8 +13,9 @@ app.use(cors());
 app.use(express.json());
 // app.use(authenticator);
 
-app.get('/', () => {
+app.get('/', (req, res) => {
   console.log('working fine');
+  res.send('working fine');
 });
 
 app.use(apiRoutes);
