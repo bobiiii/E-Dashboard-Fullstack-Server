@@ -5,7 +5,7 @@ const { adminOnlyRoute } = require('../../middlewares/protectedRoute');
 
 const inventoryRoute = express.Router();
 
-inventoryRoute.get('/inventory', middleware.protectedRoute, adminOnlyRoute, inventoryControllers.getInventories);
+inventoryRoute.get('/inventories', middleware.protectedRoute, adminOnlyRoute, inventoryControllers.getInventories);
 inventoryRoute.get('/:inventoryId', inventoryControllers.getInventoryProducts);
 inventoryRoute.post('/inventory', inventoryControllers.addInventory);
 inventoryRoute.put('/:inventoryId', inventoryControllers.updateInventory);
