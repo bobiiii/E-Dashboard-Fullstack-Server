@@ -5,7 +5,7 @@ const SupplierModel = require('./supplier.model');
 const ReturnInventoryModel = require('./returnInventory.model');
 const FaultyInventoryModel = require('./faultyInventory.model');
 const StoresModel = require('./store.model');
-const RemainingOrdersModel = require('./remainingOrders.model');
+const RemainingOrdersModel = require('./remainingOrders.mo');
 const DispatchedOrdersModel = require('./dispatchedOrders.model');
 const DispatchedCentersModel = require('./dispatchedCenters.model');
 // hello
