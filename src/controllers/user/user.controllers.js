@@ -20,7 +20,7 @@ const addUserController = asyncHandler(async (req, res, next) => {
   if (!addUserDB) {
     next(new ErrorHandler('Unable to add user'), 500);
   }
-  return res.send({ message: 'user added successfully', data: addUserDB });
+  return res.status(200).send({ message: 'user added successfully', data: addUserDB });
 });
 
 const loginUserController = asyncHandler(async (req, res, next) => {
