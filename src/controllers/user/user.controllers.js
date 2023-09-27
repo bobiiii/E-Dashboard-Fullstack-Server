@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const JWT = require('jsonwebtoken');
+// const JWT = require('jsonwebtoken');
 const { userServices } = require('../../services');
-const { environmentVariables } = require('../../config');
+// const { environmentVariables } = require('../../config');
 const asyncHandler = require('../../utils/asyncHandler');
+// const { UserModel } = require('../../models');
 const { ErrorHandler } = require('../../utils/errorHandlers');
+const { sendCookieToken } = require('../authControllers');
 
 const addUserController = asyncHandler(async (req, res, next) => {
   const { email, password, role } = req.body;
@@ -20,28 +22,24 @@ const addUserController = asyncHandler(async (req, res, next) => {
   if (!addUserDB) {
     next(new ErrorHandler('Unable to add user'), 500);
   }
-  return res.status(200).send({ message: 'user added successfully', data: addUserDB });
+  return res.status(200).send({ message: 'User added successfully', data: addUserDB });
 });
 
+// eslint-disable-next-line consistent-return
 const loginUserController = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-  const userExist = await userServices.getUserEmail({ email });
-  if (!userExist) {
+  const user = await userServices.getUserEmail({ email });
+  if (!user) {
     next(new ErrorHandler('User dosent exist'), 404);
   }
-  const loginUser = await userServices.loginUser({ email, password });
 
-  if (!loginUser) {
-    next(new ErrorHandler('Email or password is incorrect '), 401);
+  const userExist = await user.comparePassword(password, user.password);
+
+  if (!userExist) {
+    return next(new ErrorHandler('Email or password is incorrect '), 401);
   }
-  const userDetails = {
-    email, password,
-  };
-  const token = JWT.sign(userDetails, environmentVariables.SECRET_KEY);
-  res.cookie('authToken', token, {
-    httpOnly: true,
-  });
-  return res.status(200).json({ message: 'Login Success' });
+  console.log('send cokie bf4');
+  sendCookieToken(user, 200, req, res);
 });
 
 const getUsers = asyncHandler(async (req, res, next) => {

@@ -1,5 +1,7 @@
 const mongooose = require('mongoose');
 
+const bcrypt = require('bcrypt');
+
 const userSchema = mongooose.Schema({
   email: {
     type: String,
@@ -21,6 +23,18 @@ const userSchema = mongooose.Schema({
     enum: ['Admin', 'Editor', 'Tester'],
   },
 
+});
+
+userSchema.methods.comparePassword = async (currPassword, userPassword) => {
+  const pass = bcrypt.compare(currPassword, userPassword);
+  return pass;
+};
+
+// eslint-disable-next-line func-names, consistent-return
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
 const UserModel = mongooose.model('users', userSchema);
