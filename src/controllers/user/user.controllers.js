@@ -18,42 +18,29 @@ const addUserController = asyncHandler(async (req, res, next) => {
     next(new ErrorHandler('User already exists'), 409);
   }
 
-    const addUserDB = await userServices.addUser({ email, password, role });
-    if (!addUserDB) {
-      res.send('Failed to add user');
-    }
-    return res.send({ message: 'user added successfully', data: addUserDB });
-  } catch (error) {
-    console.log(error);
-    return res.send(' Error Occured');
+  const addUserDB = await userServices.addUser({ email, password, role });
+  if (!addUserDB) {
+    next(new ErrorHandler('Unable to add user'), 500);
   }
-};
+  return res.status(200).send({ message: 'User added successfully', data: addUserDB });
+});
 
-const loginUserController = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const userExist = await userServices.getUserEmail({ email });
-    if (!userExist) {
-      return res.send('User Not Found');
-    }
-    const loginUser = await userServices.loginUser({ email, password });
-
-    if (!loginUser) {
-      return res.send({ message: 'Email or Password is incorrect', data: loginUser });
-    }
-    const userDetails = {
-      email, password,
-    };
-    const token = JWT.sign(userDetails, environmentVariables.SECRET_KEY);
-    res.cookie('authToken', token, {
-      httpOnly: true,
-    });
-    return res.status(200).json({ data: 'Login Success' });
-  } catch (error) {
-    console.log(error);
-    return res.status(403).send('some error occured');
+// eslint-disable-next-line consistent-return
+const loginUserController = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await userServices.getUserEmail({ email });
+  if (!user) {
+    next(new ErrorHandler('User dosent exist'), 404);
   }
-};
+
+  const userExist = await user.comparePassword(password, user.password);
+
+  if (!userExist) {
+    return next(new ErrorHandler('Email or password is incorrect '), 401);
+  }
+  console.log('send cokie bf4');
+  sendCookieToken(user, 200, req, res);
+});
 
 const getUsers = asyncHandler(async (req, res, next) => {
   const users = await userServices.getUsers();
