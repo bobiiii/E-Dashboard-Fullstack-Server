@@ -29,8 +29,8 @@ const addProduct = asyncHandler(async (req, res, next) => {
 const getProductDetails = asyncHandler(async (req, res, next) => {
   const { productId } = req.params;
   const productDetails = await productServices.getProductDetails({ productId });
-  if (!productDetails.length && !productDetails) {
-    return next(new ErrorHandler('Unable to add Product', 404));
+  if (!productDetails) {
+    return next(new ErrorHandler('Product not found', 404));
   }
   return res.status(200).json({ data: productDetails });
 });
@@ -52,7 +52,7 @@ const updateProduct = asyncHandler(async (req, res, next) => {
   if (!updatedProduct) {
     return next(new ErrorHandler('Unable to update Product', 500));
   }
-  return res.staus(200).json({ data: updatedProduct });
+  return res.status(200).json({ data: updatedProduct });
 });
 
 const deleteProduct = asyncHandler(async (req, res, next) => {
@@ -61,7 +61,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   if (!deletedProduct.length && !deletedProduct) {
     return next(new ErrorHandler('Unable to delete Product', 500));
   }
-  return res.status(204).send('Product deleted successfully');
+  return res.status(200).send('Product deleted successfully');
 });
 
 module.exports = {

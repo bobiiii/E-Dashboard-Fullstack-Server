@@ -1,62 +1,48 @@
 const { supplierServices } = require('../../services');
+const asyncHandler = require('../../utils/asyncHandler');
+const { ErrorHandler } = require('../../utils/errorHandlers');
 
-const getSuppliers = async (req, res) => {
-  try {
-    const suppliers = await supplierServices.getSuppliers();
-    if (!suppliers || suppliers.length === 0) {
-      return res.send({ message: 'No suppliers Found' });
-    }
-
-    return res.send({ data: suppliers });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const getSuppliers = asyncHandler(async (req, res, next) => {
+  const suppliers = await supplierServices.getSuppliers();
+  if (!suppliers || suppliers.length === 0) {
+    next(new ErrorHandler('No suppliers found', 404));
   }
-};
 
-const addSupplier = async (req, res) => {
-  try {
-    const { supplier_name, location, date } = req.body;
-    const addedSupplier = await supplierServices.addSupplier({ supplier_name, location, date });
-    if (!addedSupplier) {
-      return res.send({ message: 'Unable to Add supplier' });
-    }
+  return res.status(200).json({ data: suppliers });
+});
 
-    return res.send({ data: addedSupplier });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const addSupplier = asyncHandler(async (req, res, next) => {
+  const { supplier_name, location, date } = req.body;
+  const addedSupplier = await supplierServices.addSupplier({ supplier_name, location, date });
+  if (!addedSupplier) {
+    next(new ErrorHandler('Unable to add supplier', 500));
   }
-};
 
-const deleteSupplier = async (req, res) => {
-  try {
-    const { supplierId } = req.params;
-    const deletedSupplier = await supplierServices.deleteSupplier({ supplierId });
-    if (!deletedSupplier || deletedSupplier.length === 0) {
-      return res.send({ message: 'Unable to delete supplier' });
-    }
+  return res.status(200).json({ data: addedSupplier });
+});
 
-    return res.send({ data: deletedSupplier });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const deleteSupplier = asyncHandler(async (req, res, next) => {
+  const { supplierId } = req.params;
+  const deletedSupplier = await supplierServices.deleteSupplier({ supplierId });
+  if (!deletedSupplier || deletedSupplier.length === 0) {
+    next(new ErrorHandler('Unable to delete supplier', 500));
   }
-};
 
-const updateSupplier = async (req, res) => {
-  try {
-    const { supplierId } = req.params;
-    const { supplier_name, location, date } = req.body;
-    const updatedSupplier = await supplierServices.updateSupplier({
-      supplierId, supplier_name, location, date,
-    });
-    if (!updatedSupplier) {
-      return res.send({ message: 'Unable to update supplier' });
-    }
+  return res.status(200).send('deleted successfylly');
+});
 
-    return res.send({ data: updatedSupplier });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const updateSupplier = asyncHandler(async (req, res, next) => {
+  const { supplierId } = req.params;
+  const { supplier_name, location, date } = req.body;
+  const updatedSupplier = await supplierServices.updateSupplier({
+    supplierId, supplier_name, location, date,
+  });
+  if (!updatedSupplier) {
+    next(new ErrorHandler('Unable to update supplier', 500));
   }
-};
+
+  return res.status(200).json({ data: updatedSupplier });
+});
 
 module.exports = {
   getSuppliers,

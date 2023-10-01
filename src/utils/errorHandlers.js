@@ -84,7 +84,7 @@ const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'development') {
     let error = { ...err };
     error.message = err.message;
     if (err.name === 'CastError') error = handleCastErrorDB(error);
@@ -93,7 +93,7 @@ const globalErrorHandler = (err, req, res, next) => {
     if (err.name === 'JsonWebTokenError') error = handleJWTError();
     if (err.name === 'TokenExpiredError') error = handleJWTExpiredError();
     sendErrorProd(error, req, res);
-  } else if (process.env.NODE_ENV === 'development') {
+  } else if (process.env.NODE_ENV === 'production') {
     sendErrorDev(err, req, res);
   }
 };

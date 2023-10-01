@@ -5,23 +5,23 @@ const remainingOrdersRoute = express.Router();
 
 remainingOrdersRoute.get(
   '/remaining-orders',
-  remainingOrdersControllers.getRemainingOrders
+  remainingOrdersControllers.getRemainingOrders,
 );
 remainingOrdersRoute.get(
   '/:remainingOrderId',
-  remainingOrdersControllers.getRemainingOrderDetails
+  remainingOrdersControllers.getRemainingOrderDetails,
 );
 remainingOrdersRoute.post(
   '/remaining-order',
-  remainingOrdersControllers.addRemainingOrder
+  remainingOrdersControllers.addRemainingOrder,
 );
 remainingOrdersRoute.put(
   '/:remainingOrderId',
-  remainingOrdersControllers.updateRemainingOrder
+  remainingOrdersControllers.updateRemainingOrder,
 );
 remainingOrdersRoute.delete(
   '/:remainingOrderId',
-  remainingOrdersControllers.deleteRemainingOrder
+  remainingOrdersControllers.deleteRemainingOrder,
 );
 
 module.exports = remainingOrdersRoute;

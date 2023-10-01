@@ -1,62 +1,48 @@
 const { storesServices } = require('../../services');
+const asyncHandler = require('../../utils/asyncHandler');
+const { ErrorHandler } = require('../../utils/errorHandlers');
 
-const getStores = async (req, res) => {
-  try {
-    const stores = await storesServices.getStores();
-    if (!stores || stores.length === 0) {
-      return res.send({ message: 'No Stores Found' });
-    }
-
-    return res.send({ data: stores });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const getStores = asyncHandler(async (req, res, next) => {
+  const stores = await storesServices.getStores();
+  if (!stores || stores.length === 0) {
+    next(new ErrorHandler('No stores found', 404));
   }
-};
 
-const addStore = async (req, res) => {
-  try {
-    const { store_name, status } = req.body;
-    const addedStore = await storesServices.addStore({ store_name, status });
-    if (!addedStore) {
-      return res.send({ message: 'Unable to Add Store' });
-    }
+  return res.staus(200).json({ data: stores });
+});
 
-    return res.send({ data: addedStore });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const addStore = asyncHandler(async (req, res, next) => {
+  const { store_name, status } = req.body;
+  const addedStore = await storesServices.addStore({ store_name, status });
+  if (!addedStore) {
+    next(new ErrorHandler('Unable to add store', 500));
   }
-};
 
-const deleteStore = async (req, res) => {
-  try {
-    const { storeId } = req.params;
-    const deletedStore = await storesServices.deleteStore({ storeId });
-    if (!deletedStore || deletedStore.length === 0) {
-      return res.send({ message: 'Unable to delete store' });
-    }
+  return res.status(200).json({ data: addedStore });
+});
 
-    return res.send({ data: deletedStore });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const deleteStore = asyncHandler(async (req, res, next) => {
+  const { storeId } = req.params;
+  const deletedStore = await storesServices.deleteStore({ storeId });
+  if (!deletedStore || deletedStore.length === 0) {
+    next(new ErrorHandler('Unable to delete ', 500));
   }
-};
 
-const updateStore = async (req, res) => {
-  try {
-    const { storeId } = req.params;
-    const { store_name, status } = req.body;
-    const updatedStore = await storesServices.updateStore({
-      storeId, store_name, status,
-    });
-    if (!updatedStore) {
-      return res.send({ message: 'Unable to update store' });
-    }
+  return res.status(200).send('deleted successfully');
+});
 
-    return res.send({ data: updatedStore });
-  } catch (error) {
-    return res.send({ message: 'An error occured' });
+const updateStore = asyncHandler(async (req, res, next) => {
+  const { storeId } = req.params;
+  const { store_name, status } = req.body;
+  const updatedStore = await storesServices.updateStore({
+    storeId, store_name, status,
+  });
+  if (!updatedStore) {
+    next(new ErrorHandler('Unable to update store', 404));
   }
-};
+
+  return res.status(200).json({ data: updatedStore });
+});
 
 module.exports = {
   getStores,

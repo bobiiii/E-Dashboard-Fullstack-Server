@@ -1,98 +1,76 @@
 const {
   DispatchedOrdersServices,
 } = require('../../services');
+const asyncHandler = require('../../utils/asyncHandler');
+const { ErrorHandler } = require('../../utils/errorHandlers');
 
-const getDispatchedOrders = async (req, res) => {
-  try {
-    const dispatchedOrders = await DispatchedOrdersServices.getDispatchedOrders();
-    if (!dispatchedOrders || dispatchedOrders.length === 0) {
-      return res.status(404).send('No dispatched Order found.');
-    }
-    return res.send({ data: dispatchedOrders });
-  } catch (error) {
-    return ({ message: 'An error occured' });
+const getDispatchedOrders = asyncHandler(async (req, res, next) => {
+  const dispatchedOrders = await DispatchedOrdersServices.getDispatchedOrders();
+  if (!dispatchedOrders || dispatchedOrders.length === 0) {
+    next(new ErrorHandler('No dispatched order found', 404));
   }
-};
+  return res.status(200).json({ data: dispatchedOrders });
+});
 
-const getDispatchedOrderDetails = async (req, res) => {
-  try {
-    const { dispatchedOrderId } = req.params;
-    const dispatchedOrder = await DispatchedOrdersServices.getDispatchedOrderDetails({ dispatchedOrderId });
-    if (!dispatchedOrder || dispatchedOrder.length === 0) {
-      return res.status(404).send('No dispatched Order found for the provided ID.');
-    }
-    return res.send({ data: dispatchedOrder });
-  } catch (error) {
-    return ({ message: 'An error occured' });
+const getDispatchedOrderDetails = asyncHandler(async (req, res, next) => {
+  const { dispatchedOrderId } = req.params;
+  const dispatchedOrder = await DispatchedOrdersServices.getDispatchedOrderDetails({ dispatchedOrderId });
+  if (!dispatchedOrder || dispatchedOrder.length === 0) {
+    next(new ErrorHandler('No dispatched order found', 404));
   }
-};
+  return res.status(200).json({ data: dispatchedOrder });
+});
 
-const addDispatchedOrder = async (req, res) => {
-  try {
-    const {
-      order_number,
-      dispatch_center,
-      dispatch_date,
-      total_amount,
-    } = req.body;
+const addDispatchedOrder = asyncHandler(async (req, res, next) => {
+  const {
+    order_number,
+    dispatch_center,
+    dispatch_date,
+    total_amount,
+  } = req.body;
 
-    const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
-      order_number,
-      dispatch_center,
-      dispatch_date,
-      total_amount,
-    });
-    if (!addeDispatchedOrder) {
-      return res.send({ message: 'Adding dispatched Order failed' });
-    }
-
-    return res.send({ data: addeDispatchedOrder });
-  } catch (error) {
-    console.log(error);
-    return res.send({ message: 'An error occured' });
+  const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
+    order_number,
+    dispatch_center,
+    dispatch_date,
+    total_amount,
+  });
+  if (!addeDispatchedOrder) {
+    next(new ErrorHandler('Unable to add dispatched order', 500));
   }
-};
 
-const updateDispatchedOrder = async (req, res) => {
-  try {
-    const {
-      order_number,
-      dispatch_center,
-      dispatch_date,
-      total_amount,
-    } = req.body;
-    const { dispatchedOrderId } = req.params;
-    const updatedRemainingOrder = await DispatchedOrdersServices.updateDispatchedOrder({
-      dispatchedOrderId,
-      order_number,
-      dispatch_center,
-      dispatch_date,
-      total_amount,
-    });
-    if (!updatedRemainingOrder) {
-      return res.send({ message: 'Unable to update dispatched Order' });
-    }
-    return res.send({ data: updatedRemainingOrder });
-  } catch (error) {
-    console.log(error);
-    return res.send({ message: 'An error Occured' });
+  return res.status(200).json({ data: addeDispatchedOrder });
+});
+
+const updateDispatchedOrder = asyncHandler(async (req, res, next) => {
+  const {
+    order_number,
+    dispatch_center,
+    dispatch_date,
+    total_amount,
+  } = req.body;
+  const { dispatchedOrderId } = req.params;
+  const updatedRemainingOrder = await DispatchedOrdersServices.updateDispatchedOrder({
+    dispatchedOrderId,
+    order_number,
+    dispatch_center,
+    dispatch_date,
+    total_amount,
+  });
+  if (!updatedRemainingOrder) {
+    next(new ErrorHandler('Unable to update dispatched order', 500));
   }
-};
+  return res.status(200).json({ data: updatedRemainingOrder });
+});
 
-const deleteDispatchedOrder = async (req, res) => {
-  try {
-    const { dispatchedOrderId } = req.params;
-    const deletedRemainingOrder = await DispatchedOrdersServices.deleteDispatchedOrder({ dispatchedOrderId });
-    if (!deletedRemainingOrder) {
-      return res.send({ message: 'Unable to delete dispatched Order' });
-    }
-    return res.send({ data: deletedRemainingOrder });
-  } catch (error) {
-    return res.send({ message: 'An error Occured' });
+const deleteDispatchedOrder = asyncHandler(async (req, res, next) => {
+  const { dispatchedOrderId } = req.params;
+  const deletedRemainingOrder = await DispatchedOrdersServices.deleteDispatchedOrder({ dispatchedOrderId });
+  if (!deletedRemainingOrder) {
+    next(new ErrorHandler('Unable to delete dispatched order', 500));
   }
-};
-
-//
+  return res.status(200).send('deleted successfully');
+});
 
 module.exports = {
   getDispatchedOrders,

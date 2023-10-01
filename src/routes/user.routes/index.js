@@ -4,6 +4,6 @@ const userRoute = require('./user.routes');
 const userRoutes = express.Router();
 
 userRoutes.use(userRoute);
-userRoutes.use('*', (req, res) => { res.send('Route Not Found'); });
+userRoutes.use('*', (req, res) => { res.status(404).send('Route Not Found'); });
 
 module.exports = userRoutes;

@@ -1,18 +1,22 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const JWT = require('jsonwebtoken');
+// const JWT = require('jsonwebtoken');
 const { userServices } = require('../../services');
-const { environmentVariables } = require('../../config');
+// const { environmentVariables } = require('../../config');
+const asyncHandler = require('../../utils/asyncHandler');
+// const { UserModel } = require('../../models');
+const { ErrorHandler } = require('../../utils/errorHandlers');
+const { sendCookieToken } = require('../authControllers');
 
-const addUserController = async (req, res) => {
+const addUserController = asyncHandler(async (req, res, next) => {
   const { email, password, role } = req.body;
-  try {
-    if (email && password && role === '') {
-      return res.send('Please send valid data ');
-    }
-    const userExist = await userServices.getUserEmail({ email });
-    if (userExist) {
-      return res.send('User Already Exist');
-    }
+
+  if (email && password && role === '') {
+    next(new ErrorHandler('Please fill all required fields'), 400);
+  }
+  const userExist = await userServices.getUserEmail({ email });
+  if (userExist) {
+    next(new ErrorHandler('User already exists'), 409);
+  }
 
     const addUserDB = await userServices.addUser({ email, password, role });
     if (!addUserDB) {
@@ -30,12 +34,12 @@ const loginUserController = async (req, res) => {
     const { email, password } = req.body;
     const userExist = await userServices.getUserEmail({ email });
     if (!userExist) {
-      return res.status(400).send('User Not Found');
+      return res.send('User Not Found');
     }
     const loginUser = await userServices.loginUser({ email, password });
 
     if (!loginUser) {
-      return res.status(402).send({ message: 'Email or Password is incorrect', data: loginUser });
+      return res.send({ message: 'Email or Password is incorrect', data: loginUser });
     }
     const userDetails = {
       email, password,
@@ -51,18 +55,13 @@ const loginUserController = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
-  try {
-    const users = await userServices.getUsers();
-    if (!users) {
-      return res.send('users not returning data');
-    }
-    return res.send({ data: users });
-  } catch (error) {
-    console.log(error);
-    return res.send('error occured');
+const getUsers = asyncHandler(async (req, res, next) => {
+  const users = await userServices.getUsers();
+  if (!users) {
+    next(new ErrorHandler('No users found '), 400);
   }
-};
+  return res.status(200).json({ data: users });
+});
 
 module.exports = {
   getUsers,

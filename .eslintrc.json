@@ -1,7 +1,7 @@
 {
     "extends": "airbnb-base",
     "settings": {
-        "import/core-modules": ["mongoose"]
+        "import/core-modules": ["mongoose", "bcrypt"]
     },
     "rules": {
         // "linebreak-style": ["error", "unix"],

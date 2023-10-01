@@ -13,8 +13,9 @@ app.use(cors());
 app.use(express.json());
 // app.use(authenticator);
 
-app.get('/', () => {
+app.get('/', (req, res) => {
   console.log('working fine');
+  res.send('working fine');
 });
 
 app.use(apiRoutes);
@@ -30,7 +31,7 @@ app.listen(environmentVariables.APP_PORT || 8080, (err) => {
   }
   connectMongoDB().then(() => {
     console.info('Connected to MongoDB Atlas Dashboard Cluster');
-    console.info(`server running on ${environmentVariables.APP_HOST}:${8080}`);
+    console.info(`server running on ${environmentVariables.APP_HOST}:${environmentVariables.APP_PORT}`);
   }).catch((_error) => {
     console.log(_error);
   });
