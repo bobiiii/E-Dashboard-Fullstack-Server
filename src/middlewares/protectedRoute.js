@@ -28,11 +28,10 @@ const protectedRoute = asyncHandler(async (req, res, next) => {
   }
 
   const decoded = JWT.verify(token, environmentVariables.SECRET_KEY);
-
   if (!decoded) {
     return next(new ErrorHandler('Please provide valid token', 401));
   }
-  const { _id: id, email, role } = await userServices.getUserEmail({ email: decoded.email });
+  const { id, email, role } = await userServices.getUserId(decoded.id);
   const currentUser = { id, email, role };
   req.user = currentUser;
   next();

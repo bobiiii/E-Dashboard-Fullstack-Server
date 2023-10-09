@@ -6,13 +6,15 @@ const signToken = async (id) => jwt.sign({ id }, environmentVariables.SECRET_KEY
 });
 
 const sendCookieToken = async (user, statusCode, req, res) => {
+  console.log(user._id);
   const token = await signToken(user._id);
+  console.log(token);
 
   const cookieOptions = {
     httpOnly: true,
-    sameSite: 'strict',
-    maxAge: process.env.JWT_MAX_AGE * 60 * 1000,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    // sameSite: 'strict',
+    // maxAge: process.env.JWT_MAX_AGE * 60 * 1000,
+    // secure: req.secure || req.headers['x-forwarded-proto'] === 'http',
   };
   res.cookie('token', token, cookieOptions);
   res.status(statusCode).json({
