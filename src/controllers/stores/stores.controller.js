@@ -8,7 +8,7 @@ const getStores = asyncHandler(async (req, res, next) => {
     next(new ErrorHandler('No stores found', 404));
   }
 
-  return res.staus(200).json({ data: stores });
+  return res.status(200).json({ data: stores });
 });
 
 const addStore = asyncHandler(async (req, res, next) => {
