@@ -19,6 +19,14 @@ const remainingOrdersSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    location: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

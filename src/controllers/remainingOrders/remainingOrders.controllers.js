@@ -27,6 +27,8 @@ const addRemainingOrder = asyncHandler(async (req, res, next) => {
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   } = req.body;
 
   const addedRemainingOrders = await RemainingOrdersServices.addRemainingOrder({
@@ -34,6 +36,8 @@ const addRemainingOrder = asyncHandler(async (req, res, next) => {
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   });
   if (!addedRemainingOrders) {
     next(new ErrorHandler('Unable to add remaining order', 500));
@@ -48,6 +52,8 @@ const updateRemainingOrder = asyncHandler(async (req, res, next) => {
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   } = req.body;
   const { remainingOrderId } = req.params;
   const updatedRemainingOrder = await RemainingOrdersServices.updateRemainingOrder({
@@ -56,6 +62,8 @@ const updateRemainingOrder = asyncHandler(async (req, res, next) => {
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   });
   if (!updatedRemainingOrder) {
     next(new ErrorHandler('Unable to update remaining order', 500));

@@ -7,12 +7,16 @@ const addRemainingOrder = async ({
   product_id,
   quantity,
   total_amount,
+  location,
+  address,
 }) => {
   const response = await RemainingOrdersModel.create({
     order_number,
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   });
   return response;
 };
@@ -29,12 +33,16 @@ const updateRemainingOrder = async ({
   product_id,
   quantity,
   total_amount,
+  location,
+  address,
 }) => {
   const data = {
     order_number,
     product_id,
     quantity,
     total_amount,
+    location,
+    address,
   };
   const response = await RemainingOrdersModel.findByIdAndUpdate(remainingOrderId, data, { new: true });
   return response;
