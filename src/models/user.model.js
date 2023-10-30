@@ -3,6 +3,19 @@ const mongooose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongooose.Schema({
+  first_name: {
+    type: String,
+    required: true,
+    maxlength: 15,
+    trim: true,
+
+  },
+  last_name: {
+    type: String,
+    required: true,
+    maxlength: 15,
+    trim: true,
+  },
   email: {
     type: String,
     required: true,
@@ -17,10 +30,17 @@ const userSchema = mongooose.Schema({
     minlength: 6,
     maxlength: 20,
   },
+
   role: {
     type: String,
     required: true,
-    enum: ['Admin', 'Editor', 'Tester'],
+    enum: ['Admin', 'Editor', 'Developer'],
+  },
+
+  status: {
+    type: String,
+    required: true,
+    enum: ['Active', 'Inactive'],
   },
 
 });

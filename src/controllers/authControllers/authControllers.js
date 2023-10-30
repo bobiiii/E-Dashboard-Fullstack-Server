@@ -6,9 +6,7 @@ const signToken = async (id) => jwt.sign({ id }, environmentVariables.SECRET_KEY
 });
 
 const sendCookieToken = async (user, statusCode, req, res) => {
-  console.log(user._id);
   const token = await signToken(user._id);
-  console.log(token);
 
   const cookieOptions = {
     httpOnly: true,

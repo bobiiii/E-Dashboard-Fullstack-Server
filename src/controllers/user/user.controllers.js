@@ -8,17 +8,21 @@ const { ErrorHandler } = require('../../utils/errorHandlers');
 const { sendCookieToken } = require('../authControllers');
 
 const addUserController = asyncHandler(async (req, res, next) => {
-  const { email, password, role } = req.body;
+  const {
+    first_name, last_name, email, password, role, status,
+  } = req.body;
 
-  if (email && password && role === '') {
-    next(new ErrorHandler('Please fill all required fields'), 400);
+  if (first_name && last_name && email && password && role && status === '') {
+    return next(new ErrorHandler('Please fill all required fields'), 400);
   }
   const userExist = await userServices.getUserEmail({ email });
   if (userExist) {
     next(new ErrorHandler('User already exists'), 409);
   }
 
-  const addUserDB = await userServices.addUser({ email, password, role });
+  const addUserDB = await userServices.addUser({
+    first_name, last_name, email, password, role, status,
+  });
   if (!addUserDB) {
     next(new ErrorHandler('Unable to add user'), 500);
   }
@@ -34,11 +38,12 @@ const loginUserController = asyncHandler(async (req, res, next) => {
   }
 
   const userExist = await user.comparePassword(password, user.password);
+  console.log(userExist);
 
   if (!userExist) {
     return next(new ErrorHandler('Email or password is incorrect '), 401);
   }
-  console.log('send cokie bf4');
+
   sendCookieToken(user, 200, req, res);
 });
 
