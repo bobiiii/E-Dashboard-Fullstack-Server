@@ -1,10 +1,10 @@
 const { UserModel } = require('../../models');
 
 const addUser = async ({
-  first_name, last_name, email, password, role, status,
+  first_name, last_name, email, password, dispatch_center, role, status,
 }) => {
   const user = new UserModel({
-    first_name, last_name, email, password, role, status,
+    first_name, last_name, email, password, dispatch_center, role, status,
   });
   const saveUser = await user.save();
   return saveUser;

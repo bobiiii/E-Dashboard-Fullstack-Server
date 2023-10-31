@@ -30,6 +30,10 @@ const userSchema = mongooose.Schema({
     minlength: 6,
     maxlength: 20,
   },
+  dispatch_center: {
+    type: String,
+    required: true,
+  },
 
   role: {
     type: String,

@@ -9,10 +9,10 @@ const { sendCookieToken } = require('../authControllers');
 
 const addUserController = asyncHandler(async (req, res, next) => {
   const {
-    first_name, last_name, email, password, role, status,
+    first_name, last_name, email, password, role, dispatch_center, status,
   } = req.body;
 
-  if (first_name && last_name && email && password && role && status === '') {
+  if (first_name && last_name && email && password && dispatch_center && role && status === '') {
     return next(new ErrorHandler('Please fill all required fields'), 400);
   }
   const userExist = await userServices.getUserEmail({ email });
@@ -21,7 +21,7 @@ const addUserController = asyncHandler(async (req, res, next) => {
   }
 
   const addUserDB = await userServices.addUser({
-    first_name, last_name, email, password, role, status,
+    first_name, last_name, email, password, dispatch_center, role, status,
   });
   if (!addUserDB) {
     next(new ErrorHandler('Unable to add user'), 500);
