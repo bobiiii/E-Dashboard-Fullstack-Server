@@ -4,7 +4,7 @@ const asyncHandler = require('../../utils/asyncHandler');
 
 const getProducts = asyncHandler(async (req, res, next) => {
   const products = await productServices.getProducts();
-  if (!products) {
+  if (products.length === 0) {
     return next(new ErrorHandler('No products found', 404));
   }
   return res.send({ data: products });

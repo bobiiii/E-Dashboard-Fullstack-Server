@@ -1,11 +1,13 @@
 const express = require('express');
 const { inventoryControllers } = require('../../controllers');
-const middleware = require('../../middlewares');
-const { adminOnlyRoute } = require('../../middlewares/protectedRoute');
+// const middleware = require('../../middlewares');
+// const { adminOnlyRoute } = require('../../middlewares/protectedRoute');
 
 const inventoryRoute = express.Router();
 
-inventoryRoute.get('/inventories', middleware.protectedRoute, adminOnlyRoute, inventoryControllers.getInventories);
+// middleware.protectedRoute, adminOnlyRoute,
+
+inventoryRoute.get('/inventories', inventoryControllers.getInventories);
 inventoryRoute.get('/:inventoryId', inventoryControllers.getInventoryProducts);
 inventoryRoute.post('/inventory', inventoryControllers.addInventory);
 inventoryRoute.put('/:inventoryId', inventoryControllers.updateInventory);

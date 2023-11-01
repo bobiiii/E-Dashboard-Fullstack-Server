@@ -11,15 +11,6 @@ const addProduct = async ({
   return response;
 };
 
-const addMultipleProducts = async (products) => {
-  const addedProductId = await Promise.all(products.map(async (product) => {
-    const newProduct = new ProductModel(product);
-    await newProduct.save();
-    return newProduct._id;
-  }));
-  return addedProductId;
-};
-
 const getProducts = async () => {
   const response = await ProductModel.find({});
   return response;
@@ -27,6 +18,31 @@ const getProducts = async () => {
 const getProductDetails = async ({ productId }) => {
   const response = await ProductModel.findById(productId);
   return response;
+};
+
+// eslint-disable-next-line consistent-return
+const addMultipleProducts = async (productsData) => {
+  try {
+    // eslint-disable-next-line consistent-return
+    const addedProductId = await Promise.all(productsData.map(async (product) => {
+      // console.log(product);
+      const { id, quantity } = product;
+      console.log(id, quantity);
+      const foundproduct = await ProductModel.findById(id);
+      if (foundproduct) {
+        foundproduct.quantity = parseInt(foundproduct.quantity, 10) + parseInt(product.quantity, 10); // Add product.quantity to foundproduct.quantity
+        await foundproduct.save(); // Save the updated foundproduct
+
+        // You can return the ID of the updated foundproduct if needed
+        return foundproduct._id;
+      }
+
+      // return newProduct._id;
+    }));
+    return addedProductId;
+  } catch (error) {
+    console.log(error);
+  }
 };
 const updateProduct = async ({
   productId, title, desc, quantity, price, selling_price, imgURL,

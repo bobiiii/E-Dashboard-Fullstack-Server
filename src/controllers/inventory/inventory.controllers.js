@@ -23,12 +23,14 @@ const getInventoryProducts = asyncHandler(async (req, res, next) => {
 
 const addInventory = asyncHandler(async (req, res, next) => {
   const {
-    products, invoice, date, supplier, warehouse, stock, total_price,
+    productsData, invoice, date, supplier, warehouse, stock, total_price,
   } = req.body;
-  const addedProductsIds = await productServices.addMultipleProducts(products);
+
+  const addedProductsIds = await productServices.addMultipleProducts(productsData);
   if (!addedProductsIds) {
     return next(new ErrorHandler('Unable to add inventory', 500));
   }
+
   const addedinventory = await inventoryServices.addInventory({
     addedProductsIds, invoice, date, supplier, warehouse, stock, total_price,
   });
