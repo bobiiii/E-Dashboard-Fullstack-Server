@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { ProductModel } = require('../../models');
 
 const addProduct = async ({
@@ -25,12 +26,16 @@ const addMultipleProducts = async (productsData) => {
   try {
     // eslint-disable-next-line consistent-return
     const addedProductId = await Promise.all(productsData.map(async (product) => {
-      // console.log(product);
-      const { id, quantity } = product;
-      console.log(id, quantity);
+      const { id } = product;
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.log(`Invalid ObjectId: ${id}`);
+        return null; // Return null or another value to handle this case
+      }
+
       const foundproduct = await ProductModel.findById(id);
       if (foundproduct) {
         foundproduct.quantity = parseInt(foundproduct.quantity, 10) + parseInt(product.quantity, 10); // Add product.quantity to foundproduct.quantity
+        foundproduct.price = parseInt(product.price, 10);
         await foundproduct.save(); // Save the updated foundproduct
 
         // You can return the ID of the updated foundproduct if needed

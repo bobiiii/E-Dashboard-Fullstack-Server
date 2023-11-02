@@ -27,7 +27,8 @@ const addInventory = asyncHandler(async (req, res, next) => {
   } = req.body;
 
   const addedProductsIds = await productServices.addMultipleProducts(productsData);
-  if (!addedProductsIds) {
+  console.log(addedProductsIds);
+  if (!addedProductsIds && addedProductsIds.length === 0) {
     return next(new ErrorHandler('Unable to add inventory', 500));
   }
 
@@ -35,7 +36,7 @@ const addInventory = asyncHandler(async (req, res, next) => {
     addedProductsIds, invoice, date, supplier, warehouse, stock, total_price,
   });
 
-  return res.status(200).json({ data: addedinventory });
+  return res.status(200).json({ message: 'Invoice added Successfully', data: addedinventory });
 });
 
 const updateInventory = asyncHandler(async (req, res, next) => {
