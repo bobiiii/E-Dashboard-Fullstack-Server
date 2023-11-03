@@ -1,4 +1,4 @@
-const { DispatchedOrdersModel } = require('../../models');
+const { DispatchedOrdersModel, RemainingOrdersModel } = require('../../models');
 
 const getDispatchedOrders = async () => DispatchedOrdersModel.find();
 
@@ -16,6 +16,12 @@ const addDispatchedOrder = async ({
     total_amount,
     quantity,
   });
+  if (response) {
+    const remainingOrder = await RemainingOrdersModel.find(
+      { order_number: response.order_number },
+    );
+    console.log(remainingOrder);
+  }
 
   return response;
 };
