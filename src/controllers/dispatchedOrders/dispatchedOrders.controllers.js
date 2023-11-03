@@ -6,8 +6,9 @@ const { ErrorHandler } = require('../../utils/errorHandlers');
 
 const getDispatchedOrders = asyncHandler(async (req, res, next) => {
   const dispatchedOrders = await DispatchedOrdersServices.getDispatchedOrders();
-  if (!dispatchedOrders || dispatchedOrders.length === 0) {
-    next(new ErrorHandler('No dispatched order found', 404));
+
+  if (!dispatchedOrders || !dispatchedOrders.length) {
+    return next(new ErrorHandler('No dispatched order found', 404));
   }
   return res.status(200).json({ data: dispatchedOrders });
 });
@@ -18,6 +19,7 @@ const getDispatchedOrderDetails = asyncHandler(async (req, res, next) => {
   if (!dispatchedOrder || dispatchedOrder.length === 0) {
     next(new ErrorHandler('No dispatched order found', 404));
   }
+
   return res.status(200).json({ data: dispatchedOrder });
 });
 
@@ -27,13 +29,16 @@ const addDispatchedOrder = asyncHandler(async (req, res, next) => {
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   } = req.body;
+  console.log(dispatch_date);
 
   const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
     order_number,
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   });
   if (!addeDispatchedOrder) {
     next(new ErrorHandler('Unable to add dispatched order', 500));
@@ -48,6 +53,7 @@ const updateDispatchedOrder = asyncHandler(async (req, res, next) => {
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   } = req.body;
   const { dispatchedOrderId } = req.params;
   const updatedRemainingOrder = await DispatchedOrdersServices.updateDispatchedOrder({
@@ -56,6 +62,7 @@ const updateDispatchedOrder = asyncHandler(async (req, res, next) => {
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   });
   if (!updatedRemainingOrder) {
     next(new ErrorHandler('Unable to update dispatched order', 500));

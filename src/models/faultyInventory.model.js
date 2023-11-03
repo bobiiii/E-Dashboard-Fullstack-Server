@@ -6,7 +6,7 @@ const faultyInventorySchema = new mongoose.Schema({
     required: true,
   },
   dispatch_date: {
-    type: Date,
+    type: String,
     required: true,
   },
   product: {

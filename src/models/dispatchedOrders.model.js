@@ -12,10 +12,14 @@ const DispatchedOrdersSchema = new mongoose.Schema(
       required: true,
     },
     dispatch_date: {
-      type: Date,
+      type: String,
       required: true,
     },
     total_amount: {
+      type: Number,
+      required: true,
+    },
+    quantity: {
       type: Number,
       required: true,
     },

@@ -1,19 +1,22 @@
 const { DispatchedOrdersModel } = require('../../models');
 
-const getDispatchedOrders = async () => DispatchedOrdersModel.find({});
+const getDispatchedOrders = async () => DispatchedOrdersModel.find();
 
 const addDispatchedOrder = async ({
   order_number,
   dispatch_center,
   dispatch_date,
   total_amount,
+  quantity,
 }) => {
   const response = await DispatchedOrdersModel.create({
     order_number,
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   });
+
   return response;
 };
 
@@ -29,12 +32,14 @@ const updateDispatchedOrder = async ({
   dispatch_center,
   dispatch_date,
   total_amount,
+  quantity,
 }) => {
   const data = {
     order_number,
     dispatch_center,
     dispatch_date,
     total_amount,
+    quantity,
   };
   const response = await DispatchedOrdersModel.findByIdAndUpdate(dispatchedOrderId, data, { new: true });
   return response;
