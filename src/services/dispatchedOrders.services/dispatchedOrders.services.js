@@ -20,7 +20,7 @@ const addDispatchedOrder = async ({
     const remainingOrder = await RemainingOrdersModel.find(
       { order_number: response.order_number },
     );
-    console.log(remainingOrder);
+    console.log(remainingOrder, 'remaining order');
   }
 
   return response;
