@@ -23,7 +23,7 @@ const getRemainingOrderDetails = asyncHandler(async (req, res, next) => {
 
 const addRemainingOrder = asyncHandler(async (req, res, next) => {
   const {
-    order_number,
+    product_title,
     product_id,
     quantity,
     total_amount,
@@ -32,7 +32,7 @@ const addRemainingOrder = asyncHandler(async (req, res, next) => {
   } = req.body;
 
   const addedRemainingOrders = await RemainingOrdersServices.addRemainingOrder({
-    order_number,
+    product_title,
     product_id,
     quantity,
     total_amount,

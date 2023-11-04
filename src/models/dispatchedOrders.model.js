@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const DispatchedOrdersSchema = new mongoose.Schema(
   {
-
+    product_id: {
+      type: String,
+      required: true,
+    },
     order_number: {
       type: String,
       required: true,

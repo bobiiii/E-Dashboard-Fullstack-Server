@@ -3,15 +3,15 @@ const { RemainingOrdersModel } = require('../../models');
 const getRemainingOrders = async () => RemainingOrdersModel.find({});
 
 const addRemainingOrder = async ({
-  order_number,
   product_id,
+  product_title,
   quantity,
   total_amount,
   location,
   address,
 }) => {
   const response = await RemainingOrdersModel.create({
-    order_number,
+    product_title,
     product_id,
     quantity,
     total_amount,

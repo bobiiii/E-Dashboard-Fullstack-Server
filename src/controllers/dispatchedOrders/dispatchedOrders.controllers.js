@@ -25,14 +25,16 @@ const getDispatchedOrderDetails = asyncHandler(async (req, res, next) => {
 
 const addDispatchedOrder = asyncHandler(async (req, res, next) => {
   const {
+    product_id,
     order_number,
     dispatch_center,
     dispatch_date,
     total_amount,
     quantity,
   } = req.body;
-
+  console.log(product_id, ' id cntrlr');
   const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
+    product_id,
     order_number,
     dispatch_center,
     dispatch_date,
