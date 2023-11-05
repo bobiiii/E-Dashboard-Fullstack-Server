@@ -15,7 +15,7 @@ const apiRoutes = express.Router();
 
 apiRoutes.use('/user', userRoutes);
 apiRoutes.use('/products', protectedRoute, productsRoutes);
-apiRoutes.use('/inventory',protectedRoute,, inventoryRoutes);
+apiRoutes.use('/inventory', protectedRoute, inventoryRoutes);
 apiRoutes.use('/faulty-inventory', protectedRoute, faultyInventoryRoutes);
 apiRoutes.use('/return-inventory', protectedRoute, returnInventoryRoutes);
 apiRoutes.use('/supplier', protectedRoute, supplierRoutes);
