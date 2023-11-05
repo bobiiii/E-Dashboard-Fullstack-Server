@@ -5,13 +5,11 @@ const { globalErrorHandler, ErrorHandler } = require('./utils/errorHandlers');
 
 const apiRoutes = require('./routes');
 const { connectMongoDB } = require('./config/mongo.connect');
-// const authenticator = require('./middleware/authMiddleware');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-// app.use(authenticator);
 
 app.get('/', (req, res) => {
   console.log('working fine');
