@@ -10,7 +10,7 @@ const addInventory = async ({
 };
 
 const getInventories = async () => {
-  const inventories = await InventoryModel.find({});
+  const inventories = await InventoryModel.find({}).populate('products');
   return inventories;
 };
 

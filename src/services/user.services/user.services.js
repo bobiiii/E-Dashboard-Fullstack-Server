@@ -28,9 +28,14 @@ const getUsers = async () => {
   const response = await UserModel.find({});
   return response;
 };
+const deleteUser = async ({ userId }) => {
+  const response = await UserModel.findByIdAndDelete(userId);
+  return response;
+};
 
 module.exports = {
   addUser,
+  deleteUser,
   loginUser,
   getUserEmail,
   getUserId,
