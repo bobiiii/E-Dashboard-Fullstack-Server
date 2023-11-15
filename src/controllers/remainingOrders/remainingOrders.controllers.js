@@ -7,7 +7,7 @@ const { ErrorHandler } = require('../../utils/errorHandlers');
 const getRemainingOrders = asyncHandler(async (req, res, next) => {
   const remainingOrders = await RemainingOrdersServices.getRemainingOrders();
   if (!remainingOrders || remainingOrders.length === 0) {
-    next(new ErrorHandler('No remaining orders found', 404));
+    return next(new ErrorHandler('No remaining orders found', 404));
   }
   return res.status(200).json({ data: remainingOrders });
 });
@@ -16,7 +16,7 @@ const getRemainingOrderDetails = asyncHandler(async (req, res, next) => {
   const { remainingOrderId } = req.params;
   const remainingOrders = await RemainingOrdersServices.getRemainingOrderDetails({ remainingOrderId });
   if (!remainingOrders || remainingOrders.length === 0) {
-    next(new ErrorHandler('No remaining order found', 404));
+    return next(new ErrorHandler('No remaining order found', 404));
   }
   return res.status(200).json({ data: remainingOrders });
 });
@@ -40,7 +40,7 @@ const addRemainingOrder = asyncHandler(async (req, res, next) => {
     address,
   });
   if (!addedRemainingOrders) {
-    next(new ErrorHandler('Unable to add remaining order', 500));
+    return next(new ErrorHandler('Unable to add remaining order', 500));
   }
 
   return res.status(200).json({ data: addedRemainingOrders });
@@ -66,7 +66,7 @@ const updateRemainingOrder = asyncHandler(async (req, res, next) => {
     address,
   });
   if (!updatedRemainingOrder) {
-    next(new ErrorHandler('Unable to update remaining order', 500));
+    return next(new ErrorHandler('Unable to update remaining order', 500));
   }
   return res.status(200).json({ data: updatedRemainingOrder });
 });
@@ -75,7 +75,7 @@ const deleteRemainingOrder = asyncHandler(async (req, res, next) => {
   const { remainingOrderId } = req.params;
   const deletedRemainingOrder = await RemainingOrdersServices.deleteRemainingOrder({ remainingOrderId });
   if (!deletedRemainingOrder) {
-    next(new ErrorHandler('Unable to update remaining order', 500));
+    return next(new ErrorHandler('Unable to update remaining order', 500));
   }
   return res.status(200).send('deleted successfully');
 });

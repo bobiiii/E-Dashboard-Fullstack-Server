@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const DispatchedOrdersSchema = new mongoose.Schema(
   {
     product_id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'products', // This should match the name you use for the ProductModel collection
       required: true,
     },
     order_number: {
@@ -15,7 +16,7 @@ const DispatchedOrdersSchema = new mongoose.Schema(
       required: true,
     },
     dispatch_date: {
-      type: String,
+      type: Date,
       required: true,
     },
     total_amount: {

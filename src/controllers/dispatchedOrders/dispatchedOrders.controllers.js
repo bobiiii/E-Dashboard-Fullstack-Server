@@ -32,7 +32,7 @@ const addDispatchedOrder = asyncHandler(async (req, res, next) => {
     total_amount,
     quantity,
   } = req.body;
-  console.log(product_id, ' id cntrlr');
+
   const addeDispatchedOrder = await DispatchedOrdersServices.addDispatchedOrder({
     product_id,
     order_number,
