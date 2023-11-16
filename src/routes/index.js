@@ -1,4 +1,5 @@
 const express = require('express');
+const dataRoutes = require('./data.routes');
 const userRoutes = require('./user.routes');
 const productsRoutes = require('./product.routes');
 const inventoryRoutes = require('./inventory.routes');
@@ -13,6 +14,7 @@ const { protectedRoute } = require('../middlewares/protectedRoute');
 
 const apiRoutes = express.Router();
 
+apiRoutes.use('/data', dataRoutes);
 apiRoutes.use('/user', userRoutes);
 apiRoutes.use('/products', protectedRoute, productsRoutes);
 apiRoutes.use('/inventory', protectedRoute, inventoryRoutes);

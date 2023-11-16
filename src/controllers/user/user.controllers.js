@@ -38,7 +38,6 @@ const loginUserController = asyncHandler(async (req, res, next) => {
   }
 
   const userExist = await user.comparePassword(password, user.password);
-  console.log(userExist);
 
   if (!userExist) {
     return next(new ErrorHandler('Email or password is incorrect '), 401);

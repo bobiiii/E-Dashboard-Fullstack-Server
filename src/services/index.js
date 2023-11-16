@@ -1,3 +1,4 @@
+const dataServices = require('./data.services');
 const userServices = require('./user.services');
 const inventoryServices = require('./inventory.services');
 const productServices = require('./product.services');
@@ -10,6 +11,7 @@ const DispatchedOrdersServices = require('./dispatchedOrders.services');
 const DispatchedCentersServices = require('./dispatchedCenters.services');
 
 module.exports = {
+  dataServices,
   userServices,
   inventoryServices,
   productServices,
