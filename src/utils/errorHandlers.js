@@ -13,12 +13,14 @@ class ErrorHandler extends Error {
 
 // Different Error Handlers in Production
 const handleCastErrorDB = (err) => {
+  console.log('cast err ');
   const message = `Invalid ${err.path}: ${err.value}.`;
   return new ErrorHandler(message, 400);
 };
 
 // Handle Duplicate field Error
 const handleDuplicateFieldsDB = (err) => {
+  console.log('dup err ');
   const message = `Duplicate field '${Object.keys(
     err.keyValue,
   )}'. Please use another value!`;
@@ -27,6 +29,7 @@ const handleDuplicateFieldsDB = (err) => {
 
 // Handler for validation
 const handleValidationErrorDB = (err) => {
+  console.log('valid err ');
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new ErrorHandler(message, 400);
@@ -44,6 +47,7 @@ const sendErrorDev = (err, req, res) => {
 
   if (req.originalUrl.startsWith('/')) {
     return res.status(err.statusCode).json({
+
       status: err.status,
       name: err.name,
       error: err,

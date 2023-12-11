@@ -13,18 +13,18 @@ const addUserController = asyncHandler(async (req, res, next) => {
   } = req.body;
 
   if (first_name && last_name && email && password && dispatch_center && role && status === '') {
-    return next(new ErrorHandler('Please fill all required fields'), 400);
+    return next(new ErrorHandler('Please fill all required fields', 400));
   }
   const userExist = await userServices.getUserEmail({ email });
   if (userExist) {
-    next(new ErrorHandler('User already exists'), 409);
+    next(new ErrorHandler('User already exists', 409));
   }
 
   const addUserDB = await userServices.addUser({
     first_name, last_name, email, password, dispatch_center, role, status,
   });
   if (!addUserDB) {
-    next(new ErrorHandler('Unable to add user'), 500);
+    next(new ErrorHandler('Unable to add user', 500));
   }
   return res.status(200).send({ message: 'User added successfully', data: addUserDB });
 });
@@ -34,13 +34,13 @@ const loginUserController = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await userServices.getUserEmail({ email });
   if (!user) {
-    next(new ErrorHandler('User dosent exist'), 404);
+    return next(new ErrorHandler('User doesn\'t exist', 404));
   }
 
   const userExist = await user.comparePassword(password, user.password);
 
   if (!userExist) {
-    return next(new ErrorHandler('Email or password is incorrect '), 401);
+    return next(new ErrorHandler('Email or password is incorrect', 401));
   }
 
   sendCookieToken(user, 200, req, res);
@@ -49,7 +49,7 @@ const loginUserController = asyncHandler(async (req, res, next) => {
 const getUsers = asyncHandler(async (req, res, next) => {
   const users = await userServices.getUsers();
   if (!users) {
-    next(new ErrorHandler('No users found '), 400);
+    next(new ErrorHandler('No users found ', 400));
   }
   return res.status(200).json({ data: users });
 });
@@ -58,7 +58,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
   const { userId } = req.params;
   const user = await userServices.deleteUser({ userId });
   if (!user) {
-    next(new ErrorHandler('No users found '), 400);
+    next(new ErrorHandler('No users found ', 400));
   }
   return res.status(200).json({ message: 'User deleted successfully ' });
 });
